@@ -1,27 +1,27 @@
 import pygame
 import random
+from ball import Ball
+from screen import Screen
+from slider import Slider
 
 pygame.init()
 
 screen_hieght = 800
 screen_width = 836
 
-screen = pygame.display.set_mode((screen_width,screen_hieght))
+#creating screen object
+scr = Screen(screen_hieght,screen_width)
+#creating slider object 
+slider = Slider(0,screen_hieght-50,scr)
+#creating ball object
+ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
 
+
+# giving title and logo
 pygame.display.set_caption("Tile Breakers")
 game_icon = pygame.image.load('./images/brick-breaker.png')
 pygame.display.set_icon(game_icon)
 
-
-
-# slider 
-sliderImg = pygame.image.load('./images/53-Breakout-Tiles.png')
-sliderX = 0
-sliderY = screen_hieght - 50
-sliderX_change = 0
-
-def slider(x,y):
-    screen.blit(sliderImg,(x,y))
 
 
 
@@ -46,40 +46,59 @@ for i in range(len(tileYpoints)):
 
 
 def tile(x, y, tileImg):
-    screen.blit(tileImg, (x, y))
+    scr.screen.blit(tileImg, (x, y))
 
 
 running = True
-flag = 0
 while running:
-    screen.fill((0,0,0))
+    #filling color into screen
+    scr.screen.fill((0,0,0))
+    
+
+    #key events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+        #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                sliderX_change = -0.6
+                slider.x_change = -0.6
             if event.key == pygame.K_RIGHT:
-                sliderX_change = 0.6
-        
+                slider.x_change = 0.6
+            if event.key == pygame.K_SPACE:
+                ball.state = "moving"  
+
+        #key release upward
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                sliderX_change = 0
+                slider.x_change = 0
                 
-    #slider
-    sliderX += sliderX_change
-    if sliderX <=0 :
-        sliderX = 0
-    elif sliderX >= screen_width - 120 :
-        sliderX = screen_width - 120
+    
+    slider.move()
+    # #slider
+    # sliderX += sliderX_change
+    # if sliderX <=0 :
+    #     sliderX = 0
+    # elif sliderX >= screen_width - 120 :
+    #     sliderX = screen_width - 120
 
-    slider(sliderX,sliderY)
+    # slider(sliderX,sliderY)
+
+    #ball
+    # ball.move_ball(ball.x_cor.ball.y_cor)
+    # ball.build(screen,sliderX+40,sliderY-20)
+    if ball.state == "moving":
+        ball.move_ball()
+    else:
+        ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
+    
+    
 
 
     #TILES    
     for i in range(len(tilePositionArray)):
         tile(tilePositionArray[i][0],tilePositionArray[i][1],tilePositionArray[i][2],)
     
-    
+
     pygame.display.update()
