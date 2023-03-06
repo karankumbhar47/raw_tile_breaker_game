@@ -67,9 +67,9 @@ while running:
         #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                slider.x_change = -5.6
+                slider.x_change = -1.6
             if event.key == pygame.K_RIGHT:
-                slider.x_change = 5.6
+                slider.x_change = 1.6
             if event.key == pygame.K_SPACE:
                 ball.state = "moving"  
 

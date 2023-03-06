@@ -9,7 +9,7 @@ class Ball():
         self.x_cor = x
         self.scr = scr
         self.state = "static"
-        self.speed = 3
+        self.speed = 1
         self.x_dir = 1
         self.y_dir = -1
         self.slider = slider
