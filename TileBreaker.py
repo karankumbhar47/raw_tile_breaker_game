@@ -3,6 +3,7 @@ import random
 from ball import Ball
 from screen import Screen
 from slider import Slider
+from tile import Tile
 
 pygame.init()
 
@@ -14,7 +15,10 @@ scr = Screen(screen_hieght,screen_width)
 #creating slider object 
 slider = Slider(0,screen_hieght-50,scr)
 #creating ball object
-ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
+ball = Ball(slider.x_cor+53-16,slider.y_cor-32,scr,slider)
+#creating tile object
+tile = Tile(scr,ball)
+
 
 
 # giving title and logo
@@ -26,27 +30,27 @@ pygame.display.set_icon(game_icon)
 
 
 # Tiles
-mudTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
-steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
-unbreakableTileImg = pygame.image.load('./images/07-Breakout-Tiles.png')
+# mudTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
+# steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
+# unbreakableTileImg = pygame.image.load('./images/07-Breakout-Tiles.png')
 
-tileWidth = 106
-tileHeight = 28
-startTileX = [100,153]
-startTileY = 100
-tileXpointsA = [startTileX[0]+(tileWidth*i) for i in range(0,6)]
-tileXpointsB = [startTileX[1]+(tileWidth*i) for i in range(0,5)]
-tileYpoints = [startTileY+(tileHeight*i) for i in range(0,11)]
+# tileWidth = 106
+# tileHeight = 28
+# startTileX = [100,153]
+# startTileY = 100
+# tileXpointsA = [startTileX[0]+(tileWidth*i) for i in range(0,6)]
+# tileXpointsB = [startTileX[1]+(tileWidth*i) for i in range(0,5)]
+# tileYpoints = [startTileY+(tileHeight*i) for i in range(0,11)]
 
-tilePositionArray = []
-for i in range(len(tileYpoints)):
-    for j in range(len(tileXpointsA)):
-        randomTile = random.choice([mudTileImg,steelTileImg,unbreakableTileImg])
-        tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile])
+# tilePositionArray = []
+# for i in range(len(tileYpoints)):
+#     for j in range(len(tileXpointsA)):
+#         randomTile = random.choice([mudTileImg,steelTileImg,unbreakableTileImg])
+#         tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile])
 
 
-def tile(x, y, tileImg):
-    scr.screen.blit(tileImg, (x, y))
+# def tile(x, y, tileImg):
+#     scr.screen.blit(tileImg, (x, y))
 
 
 running = True
@@ -63,9 +67,9 @@ while running:
         #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                slider.x_change = -0.6
+                slider.x_change = -5.6
             if event.key == pygame.K_RIGHT:
-                slider.x_change = 0.6
+                slider.x_change = 5.6
             if event.key == pygame.K_SPACE:
                 ball.state = "moving"  
 
@@ -88,17 +92,19 @@ while running:
     #ball
     # ball.move_ball(ball.x_cor.ball.y_cor)
     # ball.build(screen,sliderX+40,sliderY-20)
-    if ball.state == "moving":
-        ball.move_ball()
-    else:
-        ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
+    # if ball.state == "moving":
+    ball.move_ball()
+    tile.collition()
+    # else:
+    #     ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
     
     
 
 
     #TILES    
-    for i in range(len(tilePositionArray)):
-        tile(tilePositionArray[i][0],tilePositionArray[i][1],tilePositionArray[i][2],)
+    # for i in range(len(tilePositionArray)):
+    #     tile(tilePositionArray[i][0],tilePositionArray[i][1],tilePositionArray[i][2],)
     
+    tile.displayPattern()
 
     pygame.display.update()
