@@ -6,13 +6,14 @@ class Slider:
         self.y_cor = y
         self.x_change = 0
         self.img = pygame.image.load('./images/53-Breakout-Tiles.png')
-        self.lenth = self.img.get_height()
+        self.length = self.img.get_height()
         self.width = self.img.get_width()
-        self.center = [self.x_cor+(self.width/2),self.y_cor+(self.lenth/2)]
+        self.center = [self.x_cor+(self.width/2),self.y_cor+(self.length/2)]
         self.scr = scr
         
     def build(self):
         self.scr.screen.blit(self.img,(self.x_cor,self.y_cor))
+        
 
     def move(self):
         self.x_cor += self.x_change
