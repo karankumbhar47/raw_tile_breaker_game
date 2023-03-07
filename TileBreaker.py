@@ -26,33 +26,6 @@ pygame.display.set_caption("Tile Breakers")
 game_icon = pygame.image.load('./images/brick-breaker.png')
 pygame.display.set_icon(game_icon)
 
-
-
-
-# Tiles
-# mudTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
-# steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
-# unbreakableTileImg = pygame.image.load('./images/07-Breakout-Tiles.png')
-
-# tileWidth = 106
-# tileHeight = 28
-# startTileX = [100,153]
-# startTileY = 100
-# tileXpointsA = [startTileX[0]+(tileWidth*i) for i in range(0,6)]
-# tileXpointsB = [startTileX[1]+(tileWidth*i) for i in range(0,5)]
-# tileYpoints = [startTileY+(tileHeight*i) for i in range(0,11)]
-
-# tilePositionArray = []
-# for i in range(len(tileYpoints)):
-#     for j in range(len(tileXpointsA)):
-#         randomTile = random.choice([mudTileImg,steelTileImg,unbreakableTileImg])
-#         tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile])
-
-
-# def tile(x, y, tileImg):
-#     scr.screen.blit(tileImg, (x, y))
-
-
 running = True
 while running:
     #filling color into screen
@@ -80,31 +53,8 @@ while running:
                 
     
     slider.move()
-    # #slider
-    # sliderX += sliderX_change
-    # if sliderX <=0 :
-    #     sliderX = 0
-    # elif sliderX >= screen_width - 120 :
-    #     sliderX = screen_width - 120
-
-    # slider(sliderX,sliderY)
-
-    #ball
-    # ball.move_ball(ball.x_cor.ball.y_cor)
-    # ball.build(screen,sliderX+40,sliderY-20)
-    # if ball.state == "moving":
     ball.move_ball()
     tile.collition()
-    # else:
-    #     ball = Ball(slider.x_cor+40,slider.y_cor-20,scr,slider)
-    
-    
-
-
-    #TILES    
-    # for i in range(len(tilePositionArray)):
-    #     tile(tilePositionArray[i][0],tilePositionArray[i][1],tilePositionArray[i][2],)
-    
     tile.displayPattern()
 
     pygame.display.update()

@@ -4,9 +4,9 @@ import random
 
 class Tile:
     def __init__(self,src,ball):
-        self.mudTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
+        self.mudTileImg = pygame.image.load('./images/09-Breakout-Tiles.png')
         self.steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
-        self.unbreakableTileImg = pygame.image.load('./images/07-Breakout-Tiles.png')
+        self.unbreakableTileImg = pygame.image.load('./images/03-Breakout-Tiles.png')
 
         self.src = src
         self.width = self.mudTileImg.get_width()

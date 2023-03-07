@@ -3,7 +3,6 @@ import math
 
 class Ball():
     def __init__(self,x,y,scr,slider):
-        super().__init__()
         self.img = pygame.image.load('./images/58-Breakout-Tiles.png')
         self.y_cor = y
         self.x_cor = x
