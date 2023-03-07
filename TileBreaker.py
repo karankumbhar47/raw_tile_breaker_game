@@ -62,11 +62,21 @@ while running:
                 ball.y_cor += ball.dy  * (1/2)
                 ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
+            if event.key == pygame.K_s:
+                ball.speed = 2
+            if event.key == pygame.K_p:
+                if ball.speed > 0:
+                    ball.speed =0
+                else:
+                    ball.speed = 0.75
 
         #key release upward
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 slider.x_change = 0
+            if event.key == pygame.K_s :
+                ball.speed = 0.75
+
                 
     
     slider.move()

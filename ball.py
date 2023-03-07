@@ -168,11 +168,11 @@ class Ball():
             self.x_cor = self.slider.x_cor + self.slider.width/2 - self.radius
             self.y_cor = self.slider.y_cor - self.length
         
+        self.x_cor += self.speed * self.x_dir
+        self.y_cor += self.speed * self.y_dir
         self.build(self.x_cor, self.y_cor)
-        self.speed = 0.75
         pygame.draw.rect(self.scr.screen,(255,255,255),ball1Rect,1)
         pygame.draw.rect(self.scr.screen,(255,255,255),slider2Rect,1)
-
 
     
     def build(self,x,y):
@@ -180,11 +180,9 @@ class Ball():
 
     def bounce_from_wall(self):
         self.x_dir *= -1
-        self.speed +=1
 
     def bounce_from_ciel(self):
         self.y_dir *= -1
-        self.speed +=1
 
     
     def reset_position(self,x,y):

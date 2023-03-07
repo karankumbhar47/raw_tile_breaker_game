@@ -3,3 +3,4 @@ __pycache__/*
 init.py
 bricks.py
 reflection.py
+collision.py
