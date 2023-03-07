@@ -9,7 +9,7 @@ class Ball():
         self.x_cor = x
         self.scr = scr
         self.state = "static"
-        self.speed = 1
+        self.speed = 0.5
         self.x_dir = 1
         self.y_dir = -1
         self.slider = slider
@@ -23,7 +23,7 @@ class Ball():
         if self.state == "moving":
 
             self.x_cor += self.speed * self.x_dir
-            self.y_cor +=self.speed * self.y_dir
+            self.y_cor += self.speed * self.y_dir
 
             if self.x_cor <= 0 or self.x_cor >= self.scr.width-20:
                 self.bounce_from_wall()
