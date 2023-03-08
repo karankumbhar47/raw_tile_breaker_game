@@ -21,11 +21,12 @@ tile = Tile(scr,ball)
 
 
 
+
 # giving title and logo
 pygame.display.set_caption("Tile Breakers")
 game_icon = pygame.image.load('./images/brick-breaker.png')
 pygame.display.set_icon(game_icon)
-
+water = pygame.image.load('./images/27-Breakout-Tiles.png')
 
 tile_width = 106
 tile_height = 28
@@ -43,7 +44,8 @@ running = True
 while running:
     #filling color into screen
     scr.screen.fill((0,0,0))
-    
+    # scr.screen.fill((212,241,249), rect = (0, 750, screen_width, screen_hieght))
+    scr.screen.blit(water,(-80,750))
     # draw_grid()
 
     #key events
@@ -54,9 +56,9 @@ while running:
         #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                slider.x_change = -1.6
+                slider.x_change = -3.6
             if event.key == pygame.K_RIGHT:
-                slider.x_change = 1.6
+                slider.x_change = 3.6
             if event.key == pygame.K_SPACE:
                 ball.x_cor += ball.dx * (1/2)
                 ball.y_cor += ball.dy  * (1/2)
@@ -81,7 +83,7 @@ while running:
     
     slider.move()
     ball.move_ball()
-    # tile.collition()
+    tile.collition()
     tile.displayPattern()
 
     pygame.display.update()

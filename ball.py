@@ -171,8 +171,8 @@ class Ball():
         self.x_cor += self.speed * self.x_dir
         self.y_cor += self.speed * self.y_dir
         self.build(self.x_cor, self.y_cor)
-        pygame.draw.rect(self.scr.screen,(255,255,255),ball1Rect,1)
-        pygame.draw.rect(self.scr.screen,(255,255,255),slider2Rect,1)
+        # pygame.draw.rect(self.scr.screen,(255,255,255),ball1Rect,1)
+        # pygame.draw.rect(self.scr.screen,(255,255,255),slider2Rect,1)
 
     
     def build(self,x,y):
