@@ -16,6 +16,7 @@ scr = Screen(screen_hieght,screen_width)
 slider = Slider(0,screen_hieght-50,scr)
 #creating ball object
 ball = Ball(slider.x_cor + slider.width/2 ,slider.y_cor ,scr,slider)
+ball.ball = ball
 #creating tile object
 tile = Tile(scr,ball)
 
@@ -45,7 +46,7 @@ while running:
     #filling color into screen
     scr.screen.fill((0,0,0))
     # scr.screen.fill((212,241,249), rect = (0, 750, screen_width, screen_hieght))
-    scr.screen.blit(water,(-80,750))
+    # scr.screen.blit(water,(-80,750))
     # draw_grid()
 
     #key events
@@ -56,12 +57,12 @@ while running:
         #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                slider.x_change = -3.6
+                slider.x_change = -1.6
             if event.key == pygame.K_RIGHT:
-                slider.x_change = 3.6
+                slider.x_change = 1.6
             if event.key == pygame.K_SPACE:
-                ball.x_cor += ball.dx * (1/2)
-                ball.y_cor += ball.dy  * (1/2)
+                ball.x_cor += ball.dx * (1/5)
+                ball.y_cor += ball.dy  * (1/5)
                 ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
             if event.key == pygame.K_s:
@@ -70,14 +71,14 @@ while running:
                 if ball.speed > 0:
                     ball.speed =0
                 else:
-                    ball.speed = 0.75
+                    ball.speed = 0.5
 
         #key release upward
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 slider.x_change = 0
             if event.key == pygame.K_s :
-                ball.speed = 0.75
+                ball.speed = 0.5
 
                 
     

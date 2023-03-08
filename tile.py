@@ -1,6 +1,13 @@
 import pygame
 import math
 import random
+from collision import Collision
+
+class SubTile:
+    def __init__(self,img,x,y) -> None:
+        self.img=img
+        self.x_cor = x
+        self.y_cor = y
 
 class Tile:
     def __init__(self,src,ball):
@@ -38,20 +45,12 @@ class Tile:
 
 
     def collition(self):
-        sprite2 = pygame.sprite.Sprite()
-        sprite2.image = self.ball.img
-        sprite2.rect = sprite2.image.get_rect()
-        sprite2.rect.x = self.ball.x_cor
-        sprite2.rect.y = self.ball.y_cor
         for i in self.positionArray:
-            sprite1 = pygame.sprite.Sprite()
-            sprite1.image = i[2]
-            sprite1.rect = sprite1.image.get_rect()
-            sprite1.rect.x = i[0]
-            sprite1.rect.y = i[1]
+            tile = SubTile(i[2],i[0],i[1])
+            collide = Collision(tile,self.ball)
+            collide.collisionDetect()
             # test for collision between the two sprites
-            if pygame.sprite.collide_rect(sprite1, sprite2):
-                # collision detected
-                self.ball.bounce_from_ciel() 
+            if collide.remove ==1:
                 self.positionArray.remove(i)
+                collide.remove =0
 
