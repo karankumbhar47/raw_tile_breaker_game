@@ -1,5 +1,6 @@
 import pygame
 import math
+import time
 
 class Ball():
     def __init__(self,x,y,scr,slider):
@@ -8,7 +9,7 @@ class Ball():
         self.x_cor = x
         self.scr = scr
         self.state = "static"
-        self.speed = 0.75
+        self.speed = 0.5
         self.x_dir = 1
         self.y_dir = -1
         self.slider = slider
@@ -22,6 +23,7 @@ class Ball():
         
 
     def move_ball(self):
+        print(self.speed)
         ball1 = self.img
         ball1Rect = ball1.get_rect()
         ball1Rect.x = self.x_cor
@@ -160,8 +162,9 @@ class Ball():
             if self.y_cor <= 0 :
                 self.bounce_from_ciel()
 
-            if self.y_cor >= self.scr.height:
+            if self.y_cor+self.length > self.slider.y_cor+5:
                 self.reset_position(self.slider.x_cor + self.slider.width/2 - self.radius,self.slider.y_cor - self.length)
+                time.sleep(0.01)
 
 
         else:
@@ -183,6 +186,7 @@ class Ball():
 
     def bounce_from_ciel(self):
         self.y_dir *= -1
+
 
     
     def reset_position(self,x,y):
