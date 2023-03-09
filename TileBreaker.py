@@ -99,7 +99,7 @@ while running:
         if exitBtn.draw():
             running = False
     else:
-        draw_grid()
+        # draw_grid()
 
         #key events
         
@@ -150,20 +150,20 @@ while running:
                 ball.y_cor += ball.dy  * (1/5)
                 ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
-            if event.key == pygame.K_s:
+            if event.key == pygame.K_f:
                 ball.speed = 2
             if event.key == pygame.K_p:
                 if ball.speed > 0:
                     ball.speed =0
                 else:
-                    ball.speed = 0.5
+                    ball.speed = ball.speedOriginal
 
         #key release upward
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 slider.x_change = 0
-            if event.key == pygame.K_s :
-                ball.speed = 0.5
+            if event.key == pygame.K_f :
+                ball.speed = ball.speedOriginal
         
     pygame.display.update()
 pygame.quit()

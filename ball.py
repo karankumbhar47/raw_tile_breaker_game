@@ -1,6 +1,7 @@
 import pygame
 import math
 import time
+from collision import Collision
 
 class Ball():
     def __init__(self,x,y,scr,slider):
@@ -9,7 +10,8 @@ class Ball():
         self.x_cor = x
         self.scr = scr
         self.state = "static"
-        self.speed = 0.5
+        self.speed = 0.3
+        self.speedOriginal = self.speed
         self.x_dir = 1
         self.y_dir = -1
         self.slider = slider
