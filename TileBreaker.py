@@ -7,6 +7,8 @@ from tile import Tile
 
 pygame.init()
 
+clock = pygame.time.Clock()
+fps = 600
 screen_hieght = 800
 screen_width = 836
 
@@ -43,6 +45,8 @@ def draw_grid():
 
 running = True
 while running:
+    clock.tick(fps)
+
     #filling color into screen
     scr.screen.fill((0,0,0))
     # scr.screen.fill((212,241,249), rect = (0, 750, screen_width, screen_hieght))
@@ -88,3 +92,6 @@ while running:
     tile.displayPattern()
 
     pygame.display.update()
+
+
+pygame.quit()
