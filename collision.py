@@ -33,18 +33,14 @@ class Collision:
 
         if self.objectRect.midbottom[1]<self.surfaceRect.midbottom[1] and self.objectRect.midbottom[1] >= self.surfaceRect.midtop[1]:
             self.topSurfaceCollision()
-            # self.remove = 1
 
         elif self.objectRect.midright[0] >= self.surfaceRect.midleft[0] and self.objectRect.midright[0] < self.surfaceRect.midright[0]:
-            # self.remove =1
             self.leftSurfaceCollision()
         
         elif self.objectRect.midleft[0] >= self.surfaceRect.midleft[0] and self.objectRect.midleft[0] <= self.surfaceRect.midright[0]:
-            # self.remove =1
             self.rightSurfaceCollision()
 
         elif self.objectRect.bottomright == self.surfaceRect.topleft or self.objectRect.bottomleft == self.surfaceRect.topright or self.objectRect.topleft == self.surfaceRect.bottomright or self.objectRect.topright == self.surfaceRect.bottomleft:
-            # self.remove =1
             self.extremeSurfaceCollision()
 
         # elif self.objectRect.midtop[1] > self.surfaceRect.midtop[1] and self.objectRect.midtop[1] <= self.surfaceRect.midbottom[1]:
@@ -56,12 +52,10 @@ class Collision:
         if self.objectRect.midbottom[0] >=self.surfaceRect.topleft[0] and self.objectRect.midbottom[0] <= self.surfaceRect.topright[0]:
             self.object.bounce_from_ciel()
             self.remove=1
-            print("h1")
 
         elif self.objectRect.bottomright[0] >= self.surfaceRect.topleft[0] and self.objectRect.bottomright[0] <= self.surfaceRect.midtop[0]:
             self.object.bounce_from_ciel()
             self.remove=1
-            print("h2")
 
         elif self.objectRect.bottomleft[0] >= self.surfaceRect.topleft[0] and self.objectRect.bottomleft[0] <= self.surfaceRect.topright[0]:
             self.object.bounce_from_ciel()
@@ -73,50 +67,41 @@ class Collision:
         if self.objectRect.midtop[0]>= self.surfaceRect.bottomleft[0]  and self.objectRect.midtop[0] <= self.surfaceRect.bottomright[0]:
             self.object.bounce_from_ciel()
             self.remove=1
-            print("b1")
             
 
         elif self.objectRect.topright[0] > self.surfaceRect.bottomleft[0] and self.objectRect.topright[0] <= self.surfaceRect.midbottom[0]:
             self.object.bounce_from_ciel()
             self.remove=1
-            print("b2")
 
         elif self.objectRect.topleft[0] < self.surfaceRect.bottomright[0] and self.objectRect.topleft[0] >= self.surfaceRect.midbottom[0]:
             self.object.bounce_from_ciel()
             self.remove=1
-            print("b3")
 
     def leftSurfaceCollision(self):
         if self.objectRect.midright[1] >= self.surfaceRect.topleft[1] and self.objectRect.midright[1] <= self.surfaceRect.bottomleft[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l1")
             
         elif self.objectRect.topright[1] >= self.surfaceRect.topleft[1] and self.objectRect.topright[1] <= self.surfaceRect.bottomleft[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l2")
 
         elif self.objectRect.bottomright[1] >= self.surfaceRect.topleft[1] and self.objectRect.bottomright[1] <= self.surfaceRect.bottomleft[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l3")
         
     
     def rightSurfaceCollision(self):
         if self.objectRect.midleft[1] >= self.surfaceRect.topleft[1] and self.objectRect.midleft[1] <= self.surfaceRect.bottomleft[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l1")
             
         elif self.objectRect.topleft[1] >= self.surfaceRect.topright[1] and self.objectRect.topleft[1] <= self.surfaceRect.bottomright[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l2")
 
         elif self.objectRect.bottomleft[1] >= self.surfaceRect.topright[1] and self.objectRect.bottomleft[1] <= self.surfaceRect.bottomright[1]:
             self.object.bounce_from_wall()
             self.remove=1
-            print("l3")
 
   

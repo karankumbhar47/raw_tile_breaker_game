@@ -11,16 +11,18 @@ class SubTile:
 
 class Tile:
     def __init__(self,src,ball):
-        self.mudTileImg = pygame.image.load('./images/09-Breakout-Tiles.png')
-        self.steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
-        self.unbreakableTileImg = pygame.image.load('./images/03-Breakout-Tiles.png')
-
+        self.mudTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
+        self.steelTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
+        self.unbreakableTileImg = pygame.image.load('./images/07-Breakout-Tiles.png')
+        self.num = 0
+        
         self.src = src
         self.width = self.mudTileImg.get_width()
         self.height = self.mudTileImg.get_height()
 
         self.positionArray = self.createTiles()
         self.ball = ball
+
 
     def build(self,x,y,tileImg):
         self.src.screen.blit(tileImg,(x,y))
@@ -36,7 +38,16 @@ class Tile:
         for i in range(len(tileYpoints)):
             for j in range(len(tileXpointsA)):
                 randomTile = random.choice([self.mudTileImg,self.steelTileImg,self.unbreakableTileImg])
-                tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile])
+                if randomTile == self.mudTileImg:
+                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,100])
+                    self.num+=1
+                elif randomTile == self.steelTileImg:
+                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,200])
+                    self.num+=1
+                else:
+                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,300])
+                    self.num+=1
+
         return tilePositionArray
     
     def displayPattern(self):
@@ -44,13 +55,17 @@ class Tile:
             self.build(self.positionArray[i][0],self.positionArray[i][1],self.positionArray[i][2],)
 
 
-    def collition(self):
+    def collition(self,score):
         for i in self.positionArray:
             tile = SubTile(i[2],i[0],i[1])
             collide = Collision(tile,self.ball)
             collide.collisionDetect()
             # test for collision between the two sprites
             if collide.remove ==1:
-                self.positionArray.remove(i)
+                i[3] -= 100
+                score+=100
+                if i[3]==0:
+                    self.positionArray.remove(i)
+                    self.num-=1
                 collide.remove =0
-
+        return score
