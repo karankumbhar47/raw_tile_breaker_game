@@ -43,9 +43,8 @@ class Collision:
         elif self.objectRect.bottomright == self.surfaceRect.topleft or self.objectRect.bottomleft == self.surfaceRect.topright or self.objectRect.topleft == self.surfaceRect.bottomright or self.objectRect.topright == self.surfaceRect.bottomleft:
             self.extremeSurfaceCollision()
 
-        # elif self.objectRect.midtop[1] > self.surfaceRect.midtop[1] and self.objectRect.midtop[1] <= self.surfaceRect.midbottom[1]:
-        #     # self.remove =1
-        #     self.bottomSurfaceCollision()
+        elif self.objectRect.midtop[1] > self.surfaceRect.midtop[1] and self.objectRect.midtop[1] <= self.surfaceRect.midbottom[1]:
+            self.bottomSurfaceCollision()
 
 
     def topSurfaceCollision(self):

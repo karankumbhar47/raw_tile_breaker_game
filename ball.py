@@ -11,6 +11,7 @@ class Ball():
         self.scr = scr
         self.state = "static"
         self.speed = 0.5
+        self.speedOriginal = self.speed
         self.x_dir = 1
         self.y_dir = -1
         self.slider = slider
