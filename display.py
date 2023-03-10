@@ -1,6 +1,8 @@
 import pygame
+import time 
 from button import Button
 # from TileBreaker import reset
+clock = pygame.time.Clock()
 
 class Display:
     def __init__(self,scr) -> None:
@@ -25,6 +27,8 @@ class Display:
         self.scr = scr
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.createButtons()
+        self.loadingBarSetup()
+        self.loadingComplete = False
         
     
     def recordHighScore(self,highScore):
@@ -131,3 +135,49 @@ class Display:
                 ballSpeed = ball.speed
 
         return mainMenu,ballSpeed,resetCall
+    
+    def loadingBarSetup(self):
+        print("loading ...")
+        self.loadingComplete = False
+        self.loadingFont = pygame.font.SysFont(None, 48)
+        self.loading_text = self.font.render("Loading...", True, (255, 255, 255))
+        self.loading_text_rect = self.loading_text.get_rect(center=(self.scr.width/2, self.scr.height/2))
+        self.loading_bar_width = 400
+        self.loading_bar_height = 40
+        self.loading_bar_x = self.scr.width/2 - self.loading_bar_width/2
+        self.loading_bar_y = self.scr.height/2 + 50
+        self.loading_bar_progress = 0
+        self.loading_bar_rect = pygame.Rect(self.loading_bar_x, self.loading_bar_y, self.loading_bar_progress, self.loading_bar_height)
+
+    
+    def loadingUpdate(self):
+        self.loading_bar_progress += 1
+
+        self.scr.screen.blit(self.loading_text, self.loading_text_rect)
+        self.loading_bar_rect.width = self.loading_bar_progress
+        pygame.draw.rect(self.scr.screen, (255,255,255), self.loading_bar_rect)
+        print(self.loading_bar_progress,self.loading_bar_width)
+        if self.loading_bar_progress > self.loading_bar_width:
+            self.loadingComplete = True
+        return self.loadingComplete 
+
+    def levelNext(self,level):
+        x = -1000
+            
+        
+        while(self.loading_bar_progress < self.loading_bar_width) :
+            time.sleep(0.01)
+            # self.loading_bar_progress += 1
+            self.scr.screen.blit(self.loading_text, self.loading_text_rect)
+            self.loading_bar_rect.width = self.loading_bar_progress
+            pygame.draw.rect(self.scr.screen, (255,255,255), self.loading_bar_rect)
+
+            levelText = self.font.render("level "+str(level), True, (255,255,255))
+            self.scr.screen.blit(levelText,(self.scr.width/2, self.scr.height/2-100))
+            self.loading_bar_progress += 1
+            print(self.loading_bar_progress,self.loading_bar_width)
+            pass
+        
+        resetLevel  = 1
+        self.loadingComplete = False
+        return resetLevel

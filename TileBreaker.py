@@ -77,6 +77,7 @@ lifeArray = [heartImg]*3
 # 		pygame.draw.line(scr.screen, (255,255,255), (0, c * tile_height+ 100), (screen_width, c * tile_height +100))
 
 resetCall = 0
+life= [3,-1]
 running = True
 while running:
     # clock.tick(fps)
@@ -97,7 +98,7 @@ while running:
             main_menu,ballSpeed,resetCall= display.gameWindow(score,level,ball)
             ball.speed = ballSpeed
             # if ball.speed == 0:
-            print(ball.speed)
+            # print(ball.speed)
             # text = font.render("Score :" + str(score), True, (255,255,255))
             # scr.screen.blit(text,(0,0))
             # text = font.render("level "+str(level), True, (255,255,255),)
@@ -118,15 +119,16 @@ while running:
         
         if tile.num == 0:
             tile.positionArray =[]
+            tile.displayPattern()
+            time.sleep(1)
+            level = level%levelMax 
             level +=1
-            if level >= levelMax:
-                level=1
-            text = font.render("level "+str(level), True, (255,255,255),)
-            for i in range(100000):
-                scr.screen.blit(text,(screen_width//2-10,screen_height//2-20))
-            life = ball.life
-            slider,ball,tile = reset(scr)
-            ball.life = life
+            life = [ball.life,1]
+            resetCall = display.levelNext(level)
+            # ball.x_cor = x
+            # slider.x_cor = x
+
+            
                 
                 
         
@@ -147,23 +149,27 @@ while running:
                 # ball.y_cor += ball.dy  * (1/5)
                 # ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
-            # if event.key == pygame.K_f:
-            #     ball.speed = 2
-            # if event.key == pygame.K_p:
-            #     if ball.speed > 0:
-            #         ball.speed =0
-            #     else:
-            #         ball.speed = ball.speedOriginal
+            if event.key == pygame.K_f:
+                ball.speed = 2
+            if event.key == pygame.K_p:
+                if ball.speed > 0:
+                    ball.speed =0
+                else:
+                    ball.speed = ball.speedOriginal
 
         #key release upward
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 slider.x_change = 0
-            # if event.key == pygame.K_f :
-            #     ball.speed = ball.speedOriginal
+            if event.key == pygame.K_f :
+                ball.speed = ball.speedOriginal
     if resetCall == 1:
         slider,ball,tile = reset(scr)
+        if life[1] >0:
+            ball.life = life[0]
+            life[1]= -1
         resetCall = 0
         
     pygame.display.update()
+    # clock.tick(60)
 pygame.quit()

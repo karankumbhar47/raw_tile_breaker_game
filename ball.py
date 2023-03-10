@@ -10,7 +10,7 @@ class Ball():
         self.x_cor = x
         self.scr = scr
         self.state = "static"
-        self.speed = 0.5
+        self.speed = 1
         self.speedOriginal = self.speed
         self.x_dir = 1
         self.y_dir = -1
