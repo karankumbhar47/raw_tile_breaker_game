@@ -18,7 +18,7 @@ main_menu = 1
 screen_height = 800
 screen_width = 836
 level = 1
-levelMax = 10
+levelMax = 4
 score =0
 
 #creating screen object
@@ -33,7 +33,7 @@ def reset(scr):
     ball = Ball(slider.x_cor + slider.width/2 ,slider.y_cor ,scr,slider)
     ball.ball = ball
     #creating tile object
-    tile = Tile(scr,ball)
+    tile = Tile(scr,ball, level)
     return slider,ball,tile
 
 
@@ -165,6 +165,7 @@ while running:
                 ball.speed = ball.speedOriginal
     if resetCall == 1:
         slider,ball,tile = reset(scr)
+        score = 0
         if life[1] >0:
             ball.life = life[0]
             life[1]= -1
