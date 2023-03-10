@@ -146,9 +146,9 @@ while running:
             if event.key == pygame.K_RIGHT:
                 slider.x_change = 1.6
             if event.key == pygame.K_SPACE:
-                ball.x_cor += ball.dx * (1/5)
-                ball.y_cor += ball.dy  * (1/5)
-                ball.build(ball.x_cor,ball.y_cor)
+                # ball.x_cor += ball.dx * (1/5)
+                # ball.y_cor += ball.dy  * (1/5)
+                # ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
             if event.key == pygame.K_f:
                 ball.speed = 2
