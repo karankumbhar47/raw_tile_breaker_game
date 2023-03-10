@@ -163,18 +163,16 @@ class Display:
 
     def levelNext(self,level):
         x = -1000
-            
         
         while(self.loading_bar_progress < self.loading_bar_width) :
-            time.sleep(0.01)
-            # self.loading_bar_progress += 1
+            # time.sleep(1)
+            self.loading_bar_progress += 1
             self.scr.screen.blit(self.loading_text, self.loading_text_rect)
             self.loading_bar_rect.width = self.loading_bar_progress
             pygame.draw.rect(self.scr.screen, (255,255,255), self.loading_bar_rect)
 
             levelText = self.font.render("level "+str(level), True, (255,255,255))
             self.scr.screen.blit(levelText,(self.scr.width/2, self.scr.height/2-100))
-            self.loading_bar_progress += 1
             print(self.loading_bar_progress,self.loading_bar_width)
             pass
         
