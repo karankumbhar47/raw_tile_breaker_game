@@ -1,6 +1,7 @@
 import pygame
 import math
 import time
+from collision import Collision
 
 class Ball():
     def __init__(self,x,y,scr,slider):
