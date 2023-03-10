@@ -38,9 +38,9 @@ class Tile:
     def createTiles(self):
         startTileX = [100,153]
         startTileY = 100
-        tileXpointsA = [startTileX[0]+(self.width*i) for i in range(0,6)]
+        tileXpointsA = [startTileX[0]+(self.width*i) for i in range(0,2)]
         tileXpointsB = [startTileX[1]+(self.width*i) for i in range(0,5)]
-        tileYpoints = [startTileY+(self.height*i) for i in range(0,11)]
+        tileYpoints = [startTileY+(self.height*i) for i in range(0,2)]
         tilePositionArray = []
         for i in range(len(tileYpoints)):
             for j in range(len(tileXpointsA)):

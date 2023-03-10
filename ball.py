@@ -27,7 +27,7 @@ class Ball():
         self.life = 3
         self.heartImg = pygame.image.load('./images/60-Breakout-Tiles.png')
         self.heartImg = pygame.transform.scale(self.heartImg,(32,32))
-        self.gameOver = False
+        self.gameOver = 0
         
 
     def move_ball(self):
@@ -99,7 +99,7 @@ class Ball():
     def reset_position(self,x,y):
         self.life -= 1
         if self.life ==0:
-            self.gameOver = True
+            self.gameOver = 1
         self.x_cor = x
         self.y_cor = y
         self.x_dir = 1
