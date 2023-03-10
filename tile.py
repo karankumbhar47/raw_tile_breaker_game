@@ -80,6 +80,7 @@ class Tile:
                     self.positionArray.remove(i)
                     self.num-=1
                 self.remove =0
+                break
         return score
     
     def collisionDetect(self,tile,ball):
