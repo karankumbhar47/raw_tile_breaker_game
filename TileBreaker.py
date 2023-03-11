@@ -41,7 +41,7 @@ def reset(scr):
     ball = Ball(slider.x_cor + slider.width/2 ,slider.y_cor ,scr,slider)
     ball.ball = ball
     #creating tile object
-    tile = Tile(scr,ball)
+    tile = Tile(scr,ball,level)
     return slider,ball,tile
 
 

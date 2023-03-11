@@ -16,7 +16,7 @@ class SubTile:
         self.y_cor = y
 
 class Tile:
-    def __init__(self,src,ball):
+    def __init__(self,src,ball,level):
         self.mudTileImg = pygame.image.load('./images/19-Breakout-Tiles.png')
         self.mudTileBreakImg = pygame.image.load('./images/20-Breakout-Tiles.png')
         self.steelTileImg = pygame.image.load('./images/17-Breakout-Tiles.png')
@@ -33,7 +33,7 @@ class Tile:
         self.width = self.mudTileImg.get_width()
         self.height = self.mudTileImg.get_height()
         self.tile = None
-        self.positionArray = self.createTiles()
+        self.positionArray = self.createTiles(level)
         self.ball = ball
         self.particle1 = ParticlePrinciple(self.src)
 
@@ -42,13 +42,16 @@ class Tile:
         self.src.screen.blit(tileImg,(x,y))
         
 
-    def createTiles(self):
-        startTileX = [100,153]
-        startTileY = 100
-        tileXpointsA = [startTileX[0]+(self.width*i) for i in range(0,1)]
-        tileXpointsB = [startTileX[1]+(self.width*i) for i in range(0,5)]
-        tileYpoints = [startTileY+(self.height*i) for i in range(0,1)]
+    def createTiles(self,level):
+        # startTileX = [100,153]
+        # startTileY = 100
+        # tileXpointsA = [startTileX[0]+(self.width*i) for i in range(0,1)]
+        # tileXpointsB = [startTileX[1]+(self.width*i) for i in range(0,5)]
+        # tileYpoints = [startTileY+(self.height*i) for i in range(0,1)]
         tilePositionArray = []
+        if path.exists(f'level{level}_data'):
+            pickle_in = open(f'level{level}_data', 'rb')
+            data = pickle.load(pickle_in)
         row_count = 0
         tile_width = 106
         tile_height = 28
