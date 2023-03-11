@@ -161,9 +161,9 @@ while running:
         #key pressed downword
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT and ball.speed !=0:
-                slider.x_change = -1.6
+                slider.x_change = -2.6
             if event.key == pygame.K_RIGHT and ball.speed != 0:
-                slider.x_change = 1.6
+                slider.x_change = 2.6
             if event.key == pygame.K_SPACE:
                 # ball.x_cor += ball.dx * (1/5)
                 # ball.y_cor += ball.dy  * (1/5)
@@ -190,6 +190,7 @@ while running:
                 ball.speed = ball.speedOriginal
     if resetCall == 1:
         slider,ball,tile = reset(scr)
+        score = 0
         if life[1] >0:
             ball.life = life[0]
             life[1]= -1
