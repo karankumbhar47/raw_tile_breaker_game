@@ -2,12 +2,19 @@ import pygame
 import math
 import time
 from collision import Collision
+from pygame import mixer
+import time
+clock = pygame.time.Clock()
 
 class Ball():
     def __init__(self,x,y,scr,slider):
-        self.img = pygame.image.load('./images/58-Breakout-Tiles.png')
+        self.image = pygame.image.load('./images/58-Breakout-Tiles.png')
+        self.img = self.image
+        self.deadImg = pygame.image.load('./images/ghost.png')
         self.y_cor = y
         self.x_cor = x
+        self.deadImgX = self.x_cor
+        self.deadImgY = -50
         self.scr = scr
         self.state = "static"
         self.speed = 1
@@ -22,6 +29,7 @@ class Ball():
         self.build(self.x_cor,self.y_cor)
         self.dx = self.speed * self.x_dir
         self.dy = self.speed * self.y_dir
+        self.maxlife = 6
         self.ball = None
         # self.scoreMeasures = Score(self.scr)
         self.life = 3
@@ -54,19 +62,31 @@ class Ball():
 
             collide = Collision(self.slider,self.ball)
             collide.collisionDetect()
-
+            bullet_sound = mixer.Sound('./audio/laser.wav')
 
 
             if self.x_cor <= 0 or self.x_cor >= self.scr.width-20:
                 self.x_dir *= -1
+                bullet_sound.play()
+
 
             if self.y_cor <= 0 :
                 self.y_dir *= -1
+                bullet_sound.play()
 
             if self.y_cor+self.length >= self.scr.height:
+                self.deadImgX = self.x_cor
+                self.deadImgY = self.y_cor
+                self.x_cor = -100
+                self.y_cor = -100
+                # self.build(self.x_cor,self.y_cor)
+                # if self.deadImgY < -20:
                 self.reset_position(self.slider.x_cor + self.slider.width/2 - self.radius,self.slider.y_cor - self.length)
-                time.sleep(0.01)
-
+                    
+                # else:
+                #     self.deadImgY -= 0.0005
+                #     print(self.deadImgY)
+                #     print(self.y_cor)
 
         else:
             self.x_cor = self.slider.x_cor + self.slider.width/2 - self.radius
@@ -74,6 +94,9 @@ class Ball():
         
         self.x_cor += self.speed * self.x_dir
         self.y_cor += self.speed * self.y_dir
+        # if self.deadImgY > -20:
+        #     self.build(self.deadImgX,self.deadImgY,self.deadImg)
+        #     self.deadImgY -=5
         self.build(self.x_cor, self.y_cor)
         self.build_heart()
 
@@ -85,7 +108,9 @@ class Ball():
             x += self.heartImg.get_width() + 5
 
 
-    def build(self,x,y):
+    def build(self,x,y,img=""):
+        if img=="":
+            img = self.img
         self.scr.screen.blit(self.img,(x,y))
 
     def bounce_from_wall(self):

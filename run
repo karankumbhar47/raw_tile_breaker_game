@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+cd /home/karan09/coding/Python/pygame
+/usr/bin/python3 TileBreaker.py

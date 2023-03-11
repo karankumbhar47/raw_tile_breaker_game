@@ -2,7 +2,13 @@ import pygame
 import math
 import random
 from collision import Collision
+import pickle
+from os import path
+from particle import ParticlePrinciple
+from pygame import mixer
+import time
 
+clock = pygame.time.Clock()
 class SubTile:
     def __init__(self,img,x,y) -> None:
         self.img=img
@@ -29,6 +35,7 @@ class Tile:
         self.tile = None
         self.positionArray = self.createTiles()
         self.ball = ball
+        self.particle1 = ParticlePrinciple(self.src)
 
 
     def build(self,x,y,tileImg):
@@ -42,22 +49,49 @@ class Tile:
         tileXpointsB = [startTileX[1]+(self.width*i) for i in range(0,5)]
         tileYpoints = [startTileY+(self.height*i) for i in range(0,1)]
         tilePositionArray = []
-        for i in range(len(tileYpoints)):
-            for j in range(len(tileXpointsA)):
-                randomTile = random.choice([self.mudTileImg,self.steelTileImg,self.unbreakableTileImg])
-                if randomTile == self.mudTileImg:
-                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,100])
-                    self.num+=1
-                elif randomTile == self.steelTileImg:
-                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,200])
-                    self.num+=1
-                else:
-                    tilePositionArray.append([tileXpointsA[j],tileYpoints[i],randomTile,300])
-                    self.num+=1
+        row_count = 0
+        tile_width = 106
+        tile_height = 28
+        for row in data:
+            col_count = 0
+            for tile in row:
+                if tile == 1:
+                    img = pygame.transform.scale(
+                        self.unbreakableTileImg, (tile_width, tile_height))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_width
+                    img_rect.y = row_count * tile_height
+                    tile = [img_rect.x, img_rect.y, self.unbreakableTileImg, 300]
+                    tilePositionArray.append(tile)
+                    self.num += 1
+
+                if tile == 2:
+                    img = pygame.transform.scale(
+                        self.steelTileImg, (tile_width, tile_height))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_width
+                    img_rect.y = row_count * tile_height
+                    tile = [img_rect.x, img_rect.y, self.steelTileImg, 200]
+                    tilePositionArray.append(tile)
+                    self.num += 1
+
+                if tile == 3:
+                    img = pygame.transform.scale(
+                        self.mudTileImg, (tile_width, tile_height))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_width
+                    img_rect.y = row_count * tile_height
+                    tile = [img_rect.x, img_rect.y, self.mudTileImg, 100]
+                    tilePositionArray.append(tile)
+                    self.num += 1
+
+                col_count += 1
+            row_count += 1
 
         return tilePositionArray
     
     def displayPattern(self):
+        self.particle1.emit()
         for i in range(len(self.positionArray)):
             self.build(self.positionArray[i][0],self.positionArray[i][1],self.positionArray[i][2],)
 
@@ -67,20 +101,35 @@ class Tile:
             tile = SubTile(i[2],i[0],i[1])
             self.collisionDetect(tile,self.ball)
             # test for collision between the two sprites
-            if self.remove ==1:
+            if self.remove == 1:
+                bullet_sound = mixer.Sound('./audio/laser.wav')
                 i[3] -= 100
-                score+=100
                 if i[2] == self.steelTileImg and i[3] == 100:
                     i[2] = self.steelTileBreakImg
+                    bullet_sound.play()
                 elif i[2] == self.unbreakableTileImg and i[3] == 200:
                     i[2] = self.unbreakableBreakTileImg
+                    bullet_sound.play()
                 elif i[2] == self.unbreakableBreakTileImg and i[3] == 100:
                     i[2] = self.unbreakableBreakedTileImg
-                if i[3]==0:
+                    bullet_sound.play()
+
+                if i[3] == 0:
+                    explosion_sound = mixer.Sound('./audio/explosion.wav')
+                    explosion_sound.play()
+                    for j in range(random.randint(1,20)):
+                        self.particle1.add_particles(i[0] + 53,i[1]+14)
+                    if i[2] == self.unbreakableBreakedTileImg:
+                        score+=300
+                    elif i[2] == self.steelTileBreakImg:
+                        score +=200
+                    else:
+                        score += 100
                     self.positionArray.remove(i)
                     self.num-=1
                 self.remove =0
                 break
+            # clock.tick(60000)
         return score
     
     def collisionDetect(self,tile,ball):

@@ -4,3 +4,4 @@ init.py
 bricks.py
 reflection.py
 collision.py
+PygameParticles/*

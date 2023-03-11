@@ -5,8 +5,14 @@ from ball import Ball
 from screen import Screen
 from slider import Slider
 from tile import Tile
-from button import Button
+from pygame import mixer
+# from button import Button
+from PIL import ImageGrab, ImageFilter
 from display import Display
+# import win32gui
+import pyautogui
+
+
 
 pygame.init()
 
@@ -18,11 +24,13 @@ main_menu = 1
 screen_height = 800
 screen_width = 836
 level = 1
-levelMax = 10
+levelMax = 5
 score =0
+pause = False
 
 #creating screen object
 scr = Screen(screen_height,screen_width)
+
 
 
 def reset(scr):
@@ -53,7 +61,8 @@ exitBtn = pygame.transform.scale(exitBtn,(180,80))
 # startBtn = Button(screen_width//2 - 200, screen_height//2 -40,startBtn,scr)
 # exitBtn = Button(screen_width//2 + 50, screen_height//2 -40,exitBtn,scr)
 display = Display(scr)
-
+if main_menu == 0:
+    mixer.music.load('./audio/background.wav').play()
 
 # giving title and logo and some additional images
 pygame.display.set_caption("Tile Breakers")
@@ -95,7 +104,11 @@ while running:
             ball.move_ball()
             score = tile.collition(score)
             tile.displayPattern()
-            main_menu,ballSpeed,resetCall= display.gameWindow(score,level,ball)
+            if pause ==1:
+                screenshot = pygame_blurred_screenshot
+            else:
+                screenshot = None
+            main_menu,ballSpeed,resetCall,pause= display.gameWindow(score,level,ball,pause,screenshot)
             ball.speed = ballSpeed
             # if ball.speed == 0:
             # print(ball.speed)
@@ -108,6 +121,7 @@ while running:
 
         if ball.gameOver==1:
             tile.positionArray = []
+            
             main_menu,score,level,game_over,resetCall = display.restartDisplay(score)
             ball.gameOver = game_over
             
@@ -121,6 +135,12 @@ while running:
             tile.positionArray =[]
             tile.displayPattern()
             time.sleep(1)
+            if level == levelMax:
+                if ball.life == ball.maxlife:
+                    ball.life = 3
+                    score += 10000
+                else:
+                    ball.life+=1
             level = level%levelMax 
             level +=1
             life = [ball.life,1]
@@ -149,6 +169,11 @@ while running:
                 # ball.y_cor += ball.dy  * (1/5)
                 # ball.build(ball.x_cor,ball.y_cor)
                 ball.state = "moving"
+            if event.key == pygame.K_ESCAPE and main_menu+ball.gameOver ==0 :
+                pause = not(pause)
+                screenshot = ImageGrab.grab(bbox=None)
+                blurred_screenshot = screenshot.filter(ImageFilter.GaussianBlur(radius=10))
+                pygame_blurred_screenshot = pygame.image.frombuffer(blurred_screenshot.tobytes(), blurred_screenshot.size, blurred_screenshot.mode)
             if event.key == pygame.K_f:
                 ball.speed = 2
             if event.key == pygame.K_p:
@@ -168,6 +193,8 @@ while running:
         if life[1] >0:
             ball.life = life[0]
             life[1]= -1
+        else:
+            score = 0
         resetCall = 0
         
     pygame.display.update()
